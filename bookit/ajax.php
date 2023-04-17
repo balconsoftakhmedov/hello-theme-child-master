@@ -20,9 +20,9 @@ class AjaxChildActions extends AjaxActions {
 	 * Init Ajax Actions
 	 */
 	public static function init() {
-
-remove_all_actions('wp_ajax_bookit_save_staff');
-remove_all_actions('wp_ajax_nopriv_bookit_save_staff');
+self::addAction('bookit_book_appointment_child', [AppointmentControllerChild::class, 'save'], true);
+		remove_all_actions('wp_ajax_bookit_save_staff');
+		remove_all_actions('wp_ajax_nopriv_bookit_save_staff');
 		if ( is_admin() ) {
 
 			self::addAction1( 'bookit_save_staff', [ StaffControllerChild ::class, 'save_child' ], false, 10, 1 );

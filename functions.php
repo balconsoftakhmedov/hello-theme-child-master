@@ -10,6 +10,10 @@
  *
  * @return void
  */
+
+
+//ini_set('display_errors', 1);ini_set('display_startup_errors', 1);error_reporting(E_ALL);
+
 //  Fix WordPress bug... https://stackoverflow.com/questions/38693992/notice-ob-end-flush-failed-to-send-buffer-of-zlib-output-compression-1-in
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 ); // prevent Notice: ob_end_flush(): failed to send buffer of zlib output compression
 // Disable Gutenberg completely - make sure classic editor is intalled
