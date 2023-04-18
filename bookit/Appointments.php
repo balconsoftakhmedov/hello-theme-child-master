@@ -16,6 +16,8 @@ class AppointmentsChild extends Appointments {
 		$total_prices = [
 			'clear_adult_total_price',
 			'clear_child_total_price',
+			'clear_basket_total_price',
+			'clear_basket_cheese_total_price',
 			'clear_total_price'
 		];
 		$vistors_qty  = [

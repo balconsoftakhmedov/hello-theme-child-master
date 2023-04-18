@@ -70,10 +70,12 @@ class StaffControllerChild extends StaffController {
 		}
 		foreach ( $staff_services as $staff_service ) {
 			$insert = [
-				'staff_id'    => $id,
-				'service_id'  => $staff_service->id,
-				'price'       => number_format( (float) $staff_service->price, 2, '.', '' ),
-				'child_price' => number_format( (float) $staff_service->child_price, 2, '.', '' ),
+				'staff_id'            => $id,
+				'service_id'          => $staff_service->id,
+				'price'               => number_format( (float) $staff_service->price, 2, '.', '' ),
+				'child_price'         => number_format( (float) $staff_service->child_price, 2, '.', '' ),
+				'basket_price'        => number_format( (float) $staff_service->basket_price, 2, '.', '' ),
+				'basket_cheese_price' => number_format( (float) $staff_service->basket_cheese_price, 2, '.', '' ),
 			];
 			Staff_Services::insert( $insert );
 		}
@@ -89,7 +91,7 @@ class StaffControllerChild extends StaffController {
 		}
 		/** if google calendar addon is installed | end */
 		do_action( 'bookit_staff_saved', $id );
-		wp_send_json_success( [ 'id' => $id, 'staff' => $staff, 'service'=>$insert, 'message' => __( 'Staff Saved!', 'bookit' ) ] );
+		wp_send_json_success( [ 'id' => $id, 'staff' => $staff, 'service' => $insert, 'message' => __( 'Staff Saved!', 'bookit' ) ] );
 
 	}
 

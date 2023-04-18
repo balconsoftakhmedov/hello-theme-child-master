@@ -15,23 +15,27 @@ class AppointmentControllerChild extends AppointmentController {
 	private static function getCleanRules() {
 
 		return [
-			'clear_price'             => [ 'type' => 'floatval' ],
-			'user_id'                 => [ 'type' => 'intval' ],
-			'staff_id'                => [ 'type' => 'intval' ],
-			'service_id'              => [ 'type' => 'intval' ],
-			'start_timestamp'         => [ 'type' => 'intval' ],
-			'end_timestamp'           => [ 'type' => 'intval' ],
-			'now_timestamp'           => [ 'type' => 'intval' ],
-			'today_timestamp'         => [ 'type' => 'intval' ],
-			'email'                   => [ 'type' => 'strval', 'function' => [ 'custom' => false, 'name' => 'sanitize_email' ] ],
-			'payment_method'          => [ 'type' => 'strval' ],
-			'full_name'               => [ 'type' => 'strval' ],
-			'phone'                   => [ 'function' => [ 'custom' => true, 'name' => 'custom_sanitize_phone' ] ],
-			'clear_adult_total_price' => [ 'type' => 'floatval' ],
-			'clear_child_total_price' => [ 'type' => 'floatval' ],
-			'clear_total_price'       => [ 'type' => 'floatval' ],
-			'adult_qty'               => [ 'type' => 'intval' ],
-			'child_qty'               => [ 'type' => 'intval' ],
+			'clear_price'                     => [ 'type' => 'floatval' ],
+			'user_id'                         => [ 'type' => 'intval' ],
+			'staff_id'                        => [ 'type' => 'intval' ],
+			'service_id'                      => [ 'type' => 'intval' ],
+			'start_timestamp'                 => [ 'type' => 'intval' ],
+			'end_timestamp'                   => [ 'type' => 'intval' ],
+			'now_timestamp'                   => [ 'type' => 'intval' ],
+			'today_timestamp'                 => [ 'type' => 'intval' ],
+			'email'                           => [ 'type' => 'strval', 'function' => [ 'custom' => false, 'name' => 'sanitize_email' ] ],
+			'payment_method'                  => [ 'type' => 'strval' ],
+			'full_name'                       => [ 'type' => 'strval' ],
+			'phone'                           => [ 'function' => [ 'custom' => true, 'name' => 'custom_sanitize_phone' ] ],
+			'clear_adult_total_price'         => [ 'type' => 'floatval' ],
+			'clear_child_total_price'         => [ 'type' => 'floatval' ],
+			'clear_basket_total_price'        => [ 'type' => 'floatval' ],
+			'clear_basket_cheese_total_price' => [ 'type' => 'floatval' ],
+			'clear_total_price'               => [ 'type' => 'floatval' ],
+			'adult_qty'                       => [ 'type' => 'intval' ],
+			'child_qty'                       => [ 'type' => 'intval' ],
+			'basket_qty'                      => [ 'type' => 'intval' ],
+			'basket_cheese_qty'               => [ 'type' => 'intval' ],
 		];
 	}
 
@@ -110,18 +114,22 @@ class AppointmentControllerChild extends AppointmentController {
 			if ( ! empty( $data['comment'] ) ) {
 				$notes['comment'] = $data['comment'];
 			}
-			$custom_data      = [
-				'adult_total_price' => esc_html__('Adult Total Price', 'hello-elementor-child'),
-				'child_total_price'=> esc_html__('Child Total Price', 'hello-elementor-child'),
-				'total_price'=> esc_html__('Total Price', 'hello-elementor-child'),
-				'adult_qty' => esc_html__('Adults Numbers', 'hello-elementor-child'),
-				'child_qty' => esc_html__('Children Numbers', 'hello-elementor-child'),
+			$custom_data = [
+				'adult_total_price'         => esc_html__( 'Adult Total Price', 'hello-elementor-child' ),
+				'child_total_price'         => esc_html__( 'Child Total Price', 'hello-elementor-child' ),
+				'basket_total_price'        => esc_html__( 'Double picnic basket Price', 'hello-elementor-child' ),
+				'basket_cheese_total_price' => esc_html__( 'Double picnic basket (vegan cheese) Price', 'hello-elementor-child' ),
+				'total_price'               => esc_html__( 'Total Price', 'hello-elementor-child' ),
+				'adult_qty'                 => esc_html__( 'Adults Numbers', 'hello-elementor-child' ),
+				'child_qty'                 => esc_html__( 'Children Numbers', 'hello-elementor-child' ),
+				'basket_qty'                => esc_html__( 'Double picnic basket Numbers', 'hello-elementor-child' ),
+				'basket_cheese_qty'         => esc_html__( 'Double picnic basket (vegan cheese) Numbers', 'hello-elementor-child' ),
 			];
-
-			foreach ($custom_data as $cd=>$cl){
-				if (!empty($data[$cd] )) $notes['comment'] .= "\r\n{$cl} - {$data[$cd]}, ";
+			foreach ( $custom_data as $cd => $cl ) {
+				if ( ! empty( $data[ $cd ] ) ) {
+					$notes['comment'] .= "\r\n{$cl} - {$data[$cd]}, ";
+				}
 			}
-
 			if ( $customer->email != $data['email'] ) {
 				$notes['email'] = $data['email'];
 			}
@@ -134,7 +142,7 @@ class AppointmentControllerChild extends AppointmentController {
 			$data['customer_id'] = $customer->id;
 			$data['notes']       = serialize( $notes );
 			$data['status']      = Appointments::$pending;
-			$id = AppointmentsChild::create_appointment( $data );
+			$id                  = AppointmentsChild::create_appointment( $data );
 			do_action( 'bookit_appointment_created', $id );
 			$appointment          = (array) Appointments::get_full_appointment_by_id( $id );
 			$appointment['token'] = $data['token'];

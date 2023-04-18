@@ -71,6 +71,8 @@ class Staff extends DatabaseModel {
                 $service['id']            = $services[$keys[$i]]['serviceId'];
                 $service['price']         = $services[$keys[$i]]['price'];
 				$service['child_price']         = $services[$keys[$i]]['child_price'];
+               $service['basket_price']         = $services[$keys[$i]]['basket_price'];
+               $service['basket_cheese_price']         = $services[$keys[$i]]['basket_cheese_price'];
                 $service['service_title'] = $services[$keys[$i]]['title'];
                 array_push($staffServices, $service);
             }
@@ -130,6 +132,8 @@ class Staff extends DatabaseModel {
 						    \', "title":"\', %2$s.title,
 							\'", "price":"\', %3$s.price,
 						    \'", "child_price":"\', %3$s.child_price,
+						    \'", "basket_price":"\', %3$s.basket_price,
+							\'", "basket_cheese_price":"\', %3$s.basket_cheese_price,
 						\'"}\' ) ), \']\' ) as staff_services,
 						CONCAT( \'[\', GROUP_CONCAT(DISTINCT CONCAT( 
 							\'{"id":\', %4$s.id,

@@ -36,7 +36,9 @@ class Staff_Services extends DatabaseModel {
                 'SELECT %1$s.staff_id, 
                         %2$s.id as serviceId,
                         %1$s.price, 
-       					 %1$s.child_price, 
+       					 %1$s.child_price,
+       					 %1$s.basket_price,
+       					 %1$s.basket_cheese_price, 
                         %2$s.title
                         FROM %1$s 
                         LEFT JOIN %2$s ON %1$s.service_id = %2$s.id 
